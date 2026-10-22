@@ -58,7 +58,7 @@ function registrar(mensaje, nivel = 'info') {
 
 /**
  * Calcula cuántas dotaciones necesita un incidente según su gravedad.
- * @param {number} gravedad - Gravedad del incidente (1-5).
+ * @param {number} gravedad - Gravedad ya convertida a número (1-5).
  * @returns {number} Dotaciones necesarias.
  */
 function calcularRecursos(gravedad) {
@@ -74,10 +74,14 @@ function calcularRecursos(gravedad) {
  * Evalúa un incidente, emite su parte por consola y calcula las dotaciones asignadas.
  * @param {Incidente} incidente - Incidente pendiente de atender.
  * @param {number} disponibles - Dotaciones libres en el parque.
- * @returns {number} Dotaciones asignadas.
+ * @returns {number} Dotaciones asignadas (0 si la gravedad no es válida).
  */
 function procesarIncidente(incidente, disponibles) {
-    const gravedad = incidente.gravedad; // BUG: no se convierte a número
+    const gravedad = Number(incidente.gravedad);
+    if (!Number.isInteger(gravedad) || gravedad < 1 || gravedad > 5) {
+        registrar(`⚠️ [#${incidente.id}] Gravedad no válida (${incidente.gravedad}), se descarta`, 'warn');
+        return 0;
+    }
 
     switch (gravedad) {
         case 5:
@@ -110,6 +114,7 @@ function gestionarEmergencias(lote, recursosIniciales) {
         const incidente = lote[i];
 
         if (recursos === 0) {
+            debugger; // Punto crítico: parada del sistema por falta de recursos
             registrar(`⛔ Sin dotaciones. Sistema detenido antes del incidente #${incidente.id}`, 'error');
             break;
         }
@@ -119,6 +124,7 @@ function gestionarEmergencias(lote, recursosIniciales) {
             continue;
         }
 
+        debugger; // Punto crítico: incidente que ha pasado los filtros y va a procesarse
         recursos -= procesarIncidente(incidente, recursos);
     }
 
