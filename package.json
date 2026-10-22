@@ -1,0 +1,25 @@
+{
+  "name": "eme-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaniRZ10/Eme-JS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DaniRZ10/Eme-JS/issues"
+  },
+  "homepage": "https://github.com/DaniRZ10/Eme-JS#readme",
+  "devDependencies": {
+    "eslint": "^10.13.0",
+    "eslint-plugin-jsdoc": "^65.4.0"
+  }
+}
